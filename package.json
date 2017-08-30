@@ -1,0 +1,12 @@
+{
+  "name": "list-fonts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "opentype": "git+https://github.com/bramstein/opentype.git"
+  }
+}
