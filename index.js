@@ -15,6 +15,7 @@ function getFontFamiliesForDirectory(dirpath) {
 						const font = opentype.parse(data)
 						if (!font.tables || !font.tables.name) return false
 						const family = font.tables.name[Object.keys(font.tables.name)[0]].fontFamily
+						if (!family) return false
 						return family
 					} catch (e) {
 						return false
@@ -27,8 +28,11 @@ function getFontFamiliesForDirectory(dirpath) {
 }
 
 module.exports = function getAllFontFamilies() {
-	return Promise.all(FONT_DIRS.map(getFontFamiliesForDirectory)).then(([sys, usr]) => {
-		const families = new Set([...sys, ...usr])
-		return families.values()
+	return Promise.all(FONT_DIRS.map(getFontFamiliesForDirectory)).then((sets) => {
+		const families = new Set()
+		sets.forEach(x => {
+			x.forEach(y => families.add(y))
+		})
+		return families
 	})
 }
